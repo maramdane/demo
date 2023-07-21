@@ -9,8 +9,9 @@ pipeline {
             echo "Clone effectué"
         }
         stage('Build') {
-            cd git
+            cd demo
             echo "Déplacement dans le dossier Git."
+            sh "javac /src/main/java/com/example/App.java"
         }
         stage('Run') {
              sh "java -jar target/demo-01.jar"
