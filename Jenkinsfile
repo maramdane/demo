@@ -3,19 +3,23 @@ pipeline {
 
     stages {
         stage('Clone') {
-            sh "rm -rf *"
-            echo "Dossier vidé."
-            sh "git clone https://github.com/maramdane/demo"
-            echo "Clone effectué"
+            steps{
+                sh "rm -rf *"
+                echo "Dossier vidé."
+                sh "git clone https://github.com/maramdane/demo"
+                echo "Clone effectué."
+            }
         }
         stage('Build') {
-            cd demo
-            echo "Déplacement dans le dossier Git."
-            sh "javac /src/main/java/com/example/App.java"
+            steps{
+                sh "cd demo && mvn clean install compile test package verify"
+            }
         }
         stage('Run') {
-             sh "java -jar target/demo-01.jar"
-            echo "Done."
+            steps{
+                sh "cd demo && java -jar target/demo-0.1.jar"
+                echo "Done."
+            }
         }
     }
 }
